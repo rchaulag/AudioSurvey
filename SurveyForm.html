@@ -1,0 +1,127 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://code.jquery.com/jquery-3.3.1.js"
+            integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+            crossorigin="anonymous"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+
+    <form id="test" action="#" method="post">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input class="form-control" type="text" name="name" id="name" />
+        </div>
+        <div class="form-group">
+            <label for="age">age</label>
+            <input class="form-control" type="text" name="age" id="age" />
+        </div>
+        <!--<div class="form-group">
+            <label for="check">Check if you like JavaScript</label>
+            <input type="checkbox" name="check" value="yes" />
+        </div>
+        <div class="form-group">
+            <label for="select">Select your favorite JavaScript framework</label>
+            <select name="select" class="form-control">
+                <option value="none" selected="selected">None</option>
+                <option value="jquery">jQuery</option>
+                <option value="angularjs">Angular</option>
+                <option value="mine">Mine, of course!</option>
+            </select>
+
+        </div>
+        <div class="form-group">
+            <label for="message">Leave a message</label>
+            <textarea class="form-control" name="message" rows="15" cols="30"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input class="form-control" type="text" name="email" id="email" />
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input class="form-control" type="password" name="password" id="password" />
+        </div>-->
+        <p>
+            <input type="submit" value="Send" class="btn btn-primary btn-block" />
+        </p>
+    </form>
+<pre id="output"></pre>
+
+
+    <script>
+        (
+            function () {
+                var jsonObjects;
+                var jData;
+                function toJSONString(form) {
+                    var obj = {};
+                    var elements = form.querySelectorAll("input,select, textarea");
+                    for (var i = 0; i < elements.length; ++i) {
+                        var element = elements[i];
+                        var name = element.name;
+                        var value = element.value;
+
+                        if (name) {
+                            obj[name] = value;
+                        }
+                    }
+                    jsonObjects = JSON.stringify(obj);
+                    return JSON.stringify(obj);
+                }
+
+
+
+                //adding the event listener
+                document.addEventListener("DOMContentLoaded", function () {
+                    var form = document.getElementById("test");
+                    var output = document.getElementById("output");
+                    form.addEventListener("submit", function (e) {
+                        e.preventDefault();
+                        var json = toJSONString(this);
+                        output.innerHTML = json;
+
+
+                        jsonObjects = json;
+                        jsonObjects = json.slice(1, -1);
+                        jData = jsonObjects;
+                        //JSONToCSVConvertor(data, "Vehicle Report", true);
+
+                        var seperator = ',';
+                        var sCSV = ConvertToCSV(jsonObjects, seperator);
+
+                    }, false);
+
+                });
+
+
+
+                //new jazz
+                // var jData = jsonObjects;
+                function ConvertToCSV(jData, delimiter) {
+                    var arrJSON = typeof jData != 'object' ? JSON.stringify(jData) : jData;
+                    var sReturnVal = '';
+                    for (var i = 0; i < arrJSON.length; i++) {
+                        var sLine = '';
+                        for (var index in arrJSON[i]) {
+                            if (sLine != '') sLine += delimiter;
+                            sLine += arrJSON[i][index];
+                        }
+                        sReturnVal += sLine + '\r\n';
+                    }
+                    return sReturnVal;
+                }
+            })();
+    </script>
+
+</body>
+</html>
